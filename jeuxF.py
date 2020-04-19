@@ -206,25 +206,16 @@ def melanger(puz):
 	puz = puz.shuffle()
 
 global photo1, photo2 , photo3 , photo4 , photo5 , photo6 , photo7 , photo8 , photo9 , photo10 , photo11 , photo12 , photo13 , photo14 , photo15 , photo0
-photo3 = PhotoImage(file="./images/3.png")
-photo2 = PhotoImage(file="./images/2.png")
-photo1 = PhotoImage(file="./images/1.png")
-photo4 = PhotoImage(file="./images/4.png")
-photo5 = PhotoImage(file="./images/5.png")
-photo6 = PhotoImage(file="./images/6.png")
-photo7 = PhotoImage(file="./images/7.png")
-photo8 = PhotoImage(file="./images/8.png")
-photo9 = PhotoImage(file="./images/9.png")
-photo10 = PhotoImage(file="./images/10.png")
-photo11 = PhotoImage(file="./images/11.png")
-photo12 = PhotoImage(file="./images/12.png")
-photo13 = PhotoImage(file="./images/13.png")
-photo14 = PhotoImage(file="./images/14.png")
-photo15 = PhotoImage(file="./images/15.png")
-photo0 = PhotoImage(file="./images/16.png")
+
+
+photos=[]
+for i in range(0,16):
+	photos.append(PhotoImage(file="./images/"+str(i)+".png"))
+
 global Lph , LAff
 if ( t==3 ):
-	Lph = list([photo0 ,photo1, photo2 , photo3 , photo4 , photo5 , photo6 , photo7 , photo8  ])
+	#Lph = list([photo0 ,photo1, photo2 , photo3 , photo4 , photo5 , photo6 , photo7 , photo8  ])
+	Lph = photos[0:9]
 else :
 	Lph = list([photo0 ,photo1, photo2 , photo3 , photo4 , photo5 , photo6 , photo7 , photo8 , photo9 ,photo10 , photo11,photo12 , photo13,photo14 , photo15 ])
 
