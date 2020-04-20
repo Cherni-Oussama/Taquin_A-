@@ -1,8 +1,8 @@
-from tkinter import * 
 import random
 import itertools
 import collections
 import time
+from tkinter import *
 
 class Node:
 
@@ -34,13 +34,17 @@ class Node:
     def __str__(self):
         return str(self.puzzle)
 
+
+
 class Solver:
 
-    def __init__(self, start):
+    def __init__(self, start ,fenetre):
         self.start = start
+        self.fenetre = fenetre
 
     def solve(self):
         print("Recherche de solution")
+        print(self.start.board)
         global j
         queue = collections.deque([Node(self.start)])
         seen  = set()
@@ -84,16 +88,19 @@ class Solver:
     	print("coup",i," : ",x)
     	node.puzzle.afficher2(x)
     	if p:
-            fenetre.after(1500, self.aff5, p, i+1)
+            self.fenetre.after(1500, self.aff5, p, i+1)
     	else :
         	print("fin")
 
 
 class Puzzle:
 
-    def __init__(self, board):
+    def __init__(self, board , root , Lph):
         self.width = len(board[0]) 
         self.board = board
+        #self.top = tkinter.Toplevel(root)
+        self.can = root
+        self.Lph = Lph
 
     @property
     def solved(self):
@@ -138,14 +145,14 @@ class Puzzle:
         print(x)
         self.afficher2(x)
         self = puzzle
-        puzzl.board = self.board
+        puzzle.board = self.board
         return puzzle
 
     def copy(self):
         board = []
         for row in self.board:
             board.append([x for x in row])
-        return Puzzle(board)
+        return Puzzle(board,self.can,self.Lph)
 
     def move(self, at, to):
         copy = self.copy()
@@ -154,11 +161,11 @@ class Puzzle:
         copy.board[i][j], copy.board[r][c] = copy.board[r][c], copy.board[i][j]
         return copy
 
-    def afficher2 (self,liste1  ):
+    def afficher2 (self,liste1):
         "afficher les images sur le canvas"
         for k in range(len(liste1)) :
-            eff =can.create_image((30+ 150*(k % self.width)), 30+(150*( k // self.width)), anchor=NW, image=Lph[0])
-            aff =can.create_image((30+ 150*(k % self.width)), 30+(150*( k // self.width)), anchor=NW ,image = Lph[liste1[k]])
+            eff =self.can.create_image((30+ 150*(k % self.width)), 30+(150*( k // self.width)), anchor=NW, image=self.Lph[0])
+            aff =self.can.create_image((30+ 150*(k % self.width)), 30+(150*( k // self.width)), anchor=NW ,image = self.Lph[liste1[k]])
 
     def pprint(self):
         for row in self.board:
@@ -177,84 +184,4 @@ class Puzzle:
     def __iter__(self):
         for row in self.board:
             yield from row
-
-
-
-
-
-global puzzl , t ,j
-j=0
-fenetre = Tk()
-
-print("Donner la taille de votre puzzle : \n 3 --> 3*3 \n 4 --> 4*4")
-t=int(input())
-time.sleep(2)
-
-if(t==3):
-	board = [[1,2,3],[4,5,6],[7,8,0]]
-else :
-	board = [[1,2,3,4],[5,6,7,8],[9,10,11,12],[13,14,15,0]]
-
-puzzl = Puzzle(board)
-s = Solver(puzzl)
-fenetre['bg']='white'
-fenetre.title (' Taquin resolution IA')
-can=Canvas( width=180*t,height=180*t,bg='white')
-can.pack( side =TOP, padx =20, pady =20)
-
-def melanger(puz):
-	puz = puz.shuffle()
-
-global photo1, photo2 , photo3 , photo4 , photo5 , photo6 , photo7 , photo8 , photo9 , photo10 , photo11 , photo12 , photo13 , photo14 , photo15 , photo0
-
-
-photos=[]
-for i in range(0,16):
-	photos.append(PhotoImage(file="./images/"+str(i)+".png"))
-
-global Lph , LAff
-if ( t==3 ):
-	#Lph = list([photo0 ,photo1, photo2 , photo3 , photo4 , photo5 , photo6 , photo7 , photo8  ])
-	Lph = photos[0:9]
-else :
-	Lph = list([photo0 ,photo1, photo2 , photo3 , photo4 , photo5 , photo6 , photo7 , photo8 , photo9 ,photo10 , photo11,photo12 , photo13,photo14 , photo15 ])
-
-LAff = list([0,1,2,3,4,5,6,7,8])
-LAff=[]
-for row in board:
-    LAff.extend(row)
-
-menubar = Menu(fenetre)
-menu1 = Menu(menubar, tearoff=0)
-menu1.add_command(label="melanger", command=puzzl.shuffle)
-menu1.add_separator()
-menu1.add_command(label="Quitter", command=fenetre.quit)
-menubar.add_cascade(label="melanger", menu=menu1)
-
-menu2 = Menu(menubar, tearoff=0)
-menu2.add_command(label="Recherche en longeur", command=s.solve)
-menu2.add_command(label="Recherche en largeur", command=s.solve_Long)
-menu2.add_command(label="A *", command=s.solve)
-menubar.add_cascade(label="Résoudre", menu=menu2)
-fenetre.config(menu=menubar)
-
-Button(text='MEL',command=puzzl.shuffle).pack(side=LEFT)
-Button(text='RESO1',command=s.solve).pack(side=LEFT)
-Button(text='RESO2',command=s.solve_Long).pack(side=LEFT)
-
-bouton1 = Radiobutton(fenetre, text="3*3", variable=t, value=3)
-bouton2 = Radiobutton(fenetre, text="4*4", variable=t, value=4)
-bouton1.pack()
-bouton2.pack()
-
-
-
-
-for k in range(len(Lph)) :
-    eff = can.create_image((30+ 150*(k % t)), 30+(150*( k // t)), anchor=NW, image=Lph[0])
-    aff = can.create_image((30+ 150*(k % t)), 30+(150*( k // t)), anchor=NW ,image = Lph[LAff[k]])
-
-can.pack()
-
-fenetre.mainloop()
 
