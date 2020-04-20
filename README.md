@@ -1,5 +1,7 @@
 ## Résolution du jeu Taquin avec l'algorithme A* (avec interface graphique)
 
+## https://youtu.be/LAJ31ARusDo
+
 ## C'est Quoi Taquin ?
 
 Le taquin est un jeu solitaire en forme de damier créé vers 1870 aux États-Unis. 
@@ -19,3 +21,4 @@ l'algorithme de recherche A* (qui se prononce A étoile, ou A star à l'anglaise
 En raison de sa simplicité il est souvent présenté comme exemple typique d'algorithme de planification, domaine de l'intelligence artificielle.
 
 ![alt text](https://imgur.com/NBP4G6A.png)
+
