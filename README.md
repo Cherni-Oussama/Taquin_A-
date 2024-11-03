@@ -21,4 +21,3 @@ l'algorithme de recherche A* (qui se prononce A étoile, ou A star à l'anglaise
 En raison de sa simplicité il est souvent présenté comme exemple typique d'algorithme de planification, domaine de l'intelligence artificielle.
 
 ![alt text](https://imgur.com/NBP4G6A.png)
-
